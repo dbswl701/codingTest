@@ -1,5 +1,5 @@
 function solution(n) {
-  const dp = {};
+  const dp = [];
   dp[1] = 1;
   dp[2] = 2;
 
