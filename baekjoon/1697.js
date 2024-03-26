@@ -4,8 +4,6 @@ const fs = require('fs');
 const input = fs.readFileSync('./test.txt').toString().trim().split('\n');
 const [N, K] = input[0].split(' ').map(item => +item);
 
-let maxMove = Math.abs(N-K);
-
 const queue = [{cur: N, time: 0}];
 const visited = new Array(100001).fill(0);
 function solution () {
@@ -14,15 +12,16 @@ function solution () {
     while(queue.length) {
     const {cur, time} = queue.shift();
 
-    // 방문했는지 확인
-    if (0 > cur || cur > 100000 || visited[cur] === 1) continue;
     if (cur === K) {
       return time;
-    }
+    }    
     visited[cur] = 1;
-    queue.push({cur: cur+1, time: time+1});
-    queue.push({cur: cur-1, time: time+1});
-    queue.push({cur: cur*2, time: time+1});
+
+    for(let next of [cur+1, cur-1, cur*2]) {
+      if (!visited[next] && 0<=next && next <=100000) {
+        queue.push({cur: next, time: time+1});
+      }
+    }
   }
 
 }
